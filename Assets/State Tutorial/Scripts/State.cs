@@ -29,7 +29,7 @@ namespace LearnAI.FSM
         protected NavMeshAgent agent;
     
         // References
-        protected GameObject brain;
+        protected GameObject npc;
         protected Animator animator;
         protected GameObject player;
         protected State nextState;
@@ -41,7 +41,7 @@ namespace LearnAI.FSM
     
         public State(GameObject _npc, NavMeshAgent _agent, Animator _anim, GameObject _player)
         {
-            brain = _npc;
+            npc = _npc;
             agent = _agent;
             animator = _anim;
             player = _player;
@@ -79,9 +79,8 @@ namespace LearnAI.FSM
     
         public bool CanSeePlayer()
         {
-            var direction = player.transform.position - brain.transform.position;
-            var angle = Vector3.Angle(brain.transform.position, direction);
-
+            var direction = player.transform.position - npc.transform.position;
+            var angle = Vector3.Angle(direction, npc.transform.forward);
 
             if (direction.magnitude < visualDist)
             {
@@ -96,7 +95,7 @@ namespace LearnAI.FSM
 
         public bool CanAttack()
         {
-            var direction = player.transform.position - brain.transform.position;
+            var direction = player.transform.position - npc.transform.position;
 
             if (direction.magnitude < shootDist)
             {

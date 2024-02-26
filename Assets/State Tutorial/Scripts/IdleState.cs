@@ -23,13 +23,13 @@ namespace LearnAI.FSM
         {
             if (CanSeePlayer())
             {
-                nextState = new Pursue(brain, agent, animator, player);
+                nextState = new Pursue(npc, agent, animator, player);
                 stage = EVENT.EXIT;
             }
 
             if (Random.Range(0,100) < 10)
             {
-                nextState = new PatrolState(brain, agent, animator,player);
+                nextState = new PatrolState(npc, agent, animator,player);
                 stage = EVENT.EXIT;
             }
         }
@@ -62,7 +62,7 @@ namespace LearnAI.FSM
         {
             if (CanSeePlayer())
             {
-                nextState = new Pursue(brain, agent, animator, player);
+                nextState = new Pursue(npc, agent, animator, player);
                 stage = EVENT.EXIT;
             }
 
@@ -109,13 +109,13 @@ namespace LearnAI.FSM
             {
                 if (CanAttack())
                 {
-                    nextState = new Attack(brain, agent, animator, player);
+                    nextState = new Attack(npc, agent, animator, player);
                     stage = EVENT.EXIT;
                 }
                 
                 if (!CanSeePlayer())
                 {
-                    nextState = new PatrolState(brain, agent, animator, player);
+                    nextState = new PatrolState(npc, agent, animator, player);
                     stage = EVENT.EXIT;
                 }
             }
@@ -149,15 +149,15 @@ namespace LearnAI.FSM
 
         public override void Update()
         {
-            Vector3 dir = player.transform.position - brain.transform.position;
+            Vector3 dir = player.transform.position - npc.transform.position;
             dir.Normalize();
             dir.y = 0f;
 
-            brain.transform.rotation = Quaternion.Slerp(brain.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotationSpeed);
+            npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotationSpeed);
 
             if (!CanSeePlayer())
             {
-                nextState = new IdleState(brain, agent, animator, player);
+                nextState = new IdleState(npc, agent, animator, player);
                 stage = EVENT.EXIT;
             }
         }

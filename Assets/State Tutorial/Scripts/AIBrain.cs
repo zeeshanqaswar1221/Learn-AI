@@ -7,7 +7,7 @@ namespace LearnAI.FSM
 {
     public class AIBrain : MonoBehaviour
     {
-        public Transform player;
+        public GameObject player;
         
         NavMeshAgent agent;
         Animator animator;
@@ -22,7 +22,7 @@ namespace LearnAI.FSM
 
         private void Start()
         {
-            m_CurrentState = new IdleState(gameObject, agent, animator, player.gameObject);
+            m_CurrentState = new IdleState(gameObject, agent, animator, player);
         }
 
         private void Update()

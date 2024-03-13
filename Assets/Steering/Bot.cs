@@ -80,6 +80,9 @@ public class Bot : MonoBehaviour
 
     private void Hide()
     {
+        if (!InView())
+            return;
+
         Vector3 hidingSpot = Vector3.zero;
         float dist = Mathf.Infinity;
 
@@ -98,14 +101,25 @@ public class Bot : MonoBehaviour
         agent.SetDestination(hidingSpot);
     }
 
+    private bool InView()
+    {
+        float Fov = 35f;
+
+        Vector3 dirVec = target.position - transform.position;
+        float angle = Vector3.Angle(transform.forward, dirVec);
+
+        print(angle);
+        return angle <= Fov;
+    }
+
     private void Update()
     {
         //Flee();
         //Pursuit();
         //Evade();
         //Wander();
-        Hide();
 
+        Hide();
     }
 
     private void OnDrawGizmos()
